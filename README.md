@@ -42,8 +42,16 @@ APP_KEY| base64:cnZaer7BC8SY1LjgYpRpFT6ZMECbUGEy34aLeiMiUIc=              | The 
 ---
 
 ## Getting Started
-1. Clone the repo to your local machine and cd into the directory
-2. See above for the default .env variables you will need to set these in your local .env file and create a .env file if it does not exist.
+1. You MUST have Docker installed on your machine. can be downloaded here: https://www.docker.com/products/docker-desktop
+2. Clone the repo to your local machine and CD INTO THE DIRECTORY IN TERMINAL
+3. See above for the default .env variables you will need to set these in your local .env file and create a .env file if it does not exist.
    1. Or just change the .env.example to .env to have your .env file
-4. Now we can build the containers and start the application by running the following command: `./vendor/bin/sail up`
-4. Once the containers are built and running you can access the application at https://localhost:yourportnumber
+4. In Terminal run the following command to install all needed PHP packages with composer:
+   `docker run --rm -v $(pwd):/app composer install`
+   1. "app" is the path to the application root directory in docker and can be changed to what you need it to be if your docker container is different.
+   2. If composer is installed then you can run `composer install` instead of the above command.
+5. Now we can build laravel sail: `./vendor/bin/sail build --no-cache`
+6. Now we can start up laravel sail: `./vendor/bin/sail up -d`
+7. Now node dependencies need to be installed: `./vendor/bin/sail npm install`
+8. Finally we need to build the assets: `./vendor/bin/sail npm run development`
+9. Once the containers are built and running you can access the application at https://localhost:yourportnumber
