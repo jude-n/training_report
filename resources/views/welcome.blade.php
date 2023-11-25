@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto pt-10">
-        <div class="text-center">
+    <div class="container mx-auto pt-10 max-w-5xl">
+        <div class="text-justify">
             <h1 class="font-bold text-3xl mb-4">Welcome to the Training Tracker</h1>
             <p class="text-lg">Ever wonder what this marvelous tracker does? It's like a personal assistant, but without the coffee runs. Just nudge it by uploading your training data below and filling in each field. Think of it as a digital version of "connect-the-dots", but much more thrilling!</p>
         </div>
-        <div class="flex justify-center items-center h-screen">
+        <div class="flex justify-center items-center mt-16">
             <div class="w-1/2 bg-white p-4 rounded shadow">
                 <h1 class="text-2xl font-bold text-center mb-4">Upload a file</h1>
                 <!-- Display the success message if any -->
@@ -41,9 +41,12 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="flex items-center mb-4">
-                        <label for="selectedTrainings" class="w-1/4 text-right mr-4">Trainings:</label>
-                        <input required type="text" name="selectedTrainings" id="selectedTrainings" class="w-3/4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
+                    <div class="flex items-start mb-4">
+                        <label for="selectedTrainings" class="w-1/4 text-right mr-4 pt-2">Trainings:</label>
+                        <div class="w-3/4">
+                            <input required type="text" placeholder="e.g. Electrical Safety for Labs, X-Ray Safety" name="selectedTrainings" id="selectedTrainings" class="w-full bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
+                            <small class="text-gray-500">Please enter the trainings you would like to see</small>
+                        </div>
                     </div>
                     <div class="flex items-center mb-4">
                         <label for="expiryDate" class="w-1/4 text-right mr-4">Expiry:</label>
