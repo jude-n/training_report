@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/', [TrainingController::class, 'index'])->name('home');
-Route::post('/upload', [TrainingController::class, 'upload'])->name('upload');
+Route::get('/', [TrainingController::class, 'index'])->name('training.home');
+Route::post('/upload', [TrainingController::class, 'upload'])->name('training.upload');
+Route::post('/export', [TrainingController::class, 'export'])->name('training.data.export');
 
