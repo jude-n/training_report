@@ -23,6 +23,9 @@ class TrainingController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:txt,json',
+            'fiscalYear' => 'required',
+            'selectedTrainings' => 'required',
+            'expiryDate' => 'required',
         ]);
         $fiscalYear = $request->input('fiscalYear');
         $selectedTrainings = $request->input('selectedTrainings');
@@ -48,20 +51,20 @@ class TrainingController extends Controller
         if ($request->has('trainingParticipantCount')) {
             $unserializedTrainingData = unserialize($request->trainingParticipantCount);
             $trainingParticipantCount = json_encode($unserializedTrainingData);
-            file_put_contents('trainingParticipantCount.json', $trainingParticipantCount);
+            file_put_contents('trainingParticipantCount-TaskOne.json', $trainingParticipantCount);
         }
         if ($request->has('participants')) {
             $unserializedParticipantData = unserialize($request->participants);
             $particapanst = json_encode($unserializedParticipantData);
-            file_put_contents('participants.json', $particapanst);
+            file_put_contents('participants-TaskTwo.json', $particapanst);
         }
         if ($request->has('peopleWithExpiredTrainings')) {
             $unserializedExpiredData = unserialize($request->peopleWithExpiredTrainings);
             $peopleWithExpiredTrainings = json_encode($unserializedExpiredData);
-            file_put_contents('peopleWithExpiredTrainings.json', $peopleWithExpiredTrainings);
+            file_put_contents('peopleWithExpiredTrainings-TaskThree.json', $peopleWithExpiredTrainings);
         }
 
-        $files = array('trainingParticipantCount.json', 'participants.json', 'peopleWithExpiredTrainings.json');
+        $files = array('trainingParticipantCount-TaskOne.json', 'participants-TaskTwo.json', 'peopleWithExpiredTrainings-TaskThree.json');
         $zipname = 'trainingReports.zip';
         $zip = new \ZipArchive;
         $zip->open($zipname, \ZipArchive::CREATE);

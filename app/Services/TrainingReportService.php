@@ -39,7 +39,6 @@ class TrainingReportService
                         $completedTrainings[$trainingName]['count']++;
                     }
                 }
-
                 $tempTrainingArray[$trainingName] = 1;
             }
         }
@@ -63,18 +62,12 @@ class TrainingReportService
             $names = [];
             foreach ($trainings as $person) {
 
-                $filteredCompletions = $this->filterTrainingCompletionByName($person, $training);
-
-                if (empty($filteredCompletions)) {
-                    continue;
-                }
-
-                $completions = $this->filterByFiscalYear($filteredCompletions, $startOfFiscalYear, $endOfFiscalYear);
-                if (count($completions) > 0) {
+                $completions = $this->getTrainingCompletionsForFiscalYear($person, $training, $startOfFiscalYear, $endOfFiscalYear);
+                if (!empty($completions)) {
                     $names[]['name'] = $person->name;
                 }
             }
-            if (count($names) > 0) {
+            if (!empty($names)) {
                 $attendance[$training]['name'] = $training;
                 $attendance[$training]['attendees'] = $names;
             }
@@ -100,24 +93,18 @@ class TrainingReportService
             });
             $encountered = [];
             foreach ($person->completions as $training) {
-                $tempArray = [];
                 $trainingName = $training->name;
                 $trainingDate = $training->timestamp;
                 if (!isset($encountered[$trainingName])) {
-                    if ($trainingDate < $newDate) {
-                        $tempArray['name'] = $trainingName;
-                        $tempArray['timestamp'] = $trainingDate;
-                        $tempArray['status'] = 'Expired';
-                    } else if ($trainingDate <= $nextMonthDate) {
-                        $tempArray['name'] = $trainingName;
-                        $tempArray['timestamp'] = $trainingDate;
-                        $tempArray['status'] = 'Expires soon';
+                    $status = $this->getTrainingStatus($training,  $newDate, $nextMonthDate);
+                    if (isset($status)) {
+                        $details['name'] = $trainingName;
+                        $details['timestamp'] = $trainingDate;
+                        $details['status'] = $status;
+                        $expired_or_expiring_trainings[$person->name]['name'] = $person->name;
+                        $expired_or_expiring_trainings[$person->name]['completions'][] = $details;
                     }
                     $encountered[$trainingName] = 1;
-                }
-                if (!empty($tempArray)) {
-                    $expired_or_expiring_trainings[$person->name]['name'] = $person->name;
-                    $expired_or_expiring_trainings[$person->name]['completions'][] = $tempArray;
                 }
             }
         }
@@ -156,7 +143,7 @@ class TrainingReportService
      * @param bool|int $endOfFiscalYear
      * @return array
      */
-    private function filterByFiscalYear(mixed $completions, bool|int $startOfFiscalYear, bool|int $endOfFiscalYear): array
+    private function filterTrainingsByFiscalYear(mixed $completions, bool|int $startOfFiscalYear, bool|int $endOfFiscalYear): array
     {
         $filteredCompletions = array_filter($completions, function ($item) use ($startOfFiscalYear, $endOfFiscalYear) {
             $date = strtotime($item->timestamp);
@@ -165,4 +152,40 @@ class TrainingReportService
         return $filteredCompletions;
     }
 
+    /**
+     * @param mixed $person
+     * @param string $training
+     * @param bool|int $startOfFiscalYear
+     * @param bool|int $endOfFiscalYear
+     * @return array
+     */
+    private function getTrainingCompletionsForFiscalYear(mixed $person, string $training, bool|int $startOfFiscalYear, bool|int $endOfFiscalYear): array
+    {
+        $filteredCompletions = $this->filterTrainingCompletionByName($person, $training);
+
+        if (empty($filteredCompletions)) {
+            return [];
+        }
+
+        return $this->filterTrainingsByFiscalYear($filteredCompletions, $startOfFiscalYear, $endOfFiscalYear);
+    }
+
+    /**
+     * @param mixed $training
+     * @param array $encountered
+     * @param string $newDate
+     * @param string $nextMonthDate
+     * @return array
+     */
+    private function getTrainingStatus(mixed $training, string $newDate, string $nextMonthDate): string|null
+    {
+        $trainingDate = $training->timestamp;
+        if ($trainingDate < $newDate) {
+            return 'Expired';
+        }
+        if ($trainingDate <= $nextMonthDate) {
+            return 'Expires soon';
+        }
+        return null;
+    }
 }

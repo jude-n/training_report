@@ -14,14 +14,14 @@ This application is designed to streamline and enhance the way you handle, analy
 ---
 
 ## Built with
-| Component    | Version | Website/Documentation                                             |
-|--------------|---------|-------------------------------------------------------------------|
-| Laravel      | 10+     | [Laravel](https://laravel.com/docs/8.x)                           |
-| PHP          | 8.2     | [PHP](https://www.php.net/manual/en/migration74.new-features.php) |
-| Composer     | 2.6+    | [Composer](https://getcomposer.org/doc/)                          |
-| Laravel/Sail | 1.26+   | [Docker](https://docs.docker.com/)                                |
-| NPM          | 10+     | [NPM](https://docs.npmjs.com/)                                    |
-| TailwindCSS  | 3.3+    | [TailwindCSS](https://tailwindcss.com/docs)                       |
+| Component    | Version |
+|--------------|---------|
+| Laravel      | 10+     |
+| PHP          | 8.2     |
+| Composer     | 2.6+    |
+| Laravel/Sail | 1.26+   | 
+| NPM          | 10+     |
+| TailwindCSS  | 3.3+    |
 ---
 ### Build instructions
 #### Single step build
@@ -44,5 +44,6 @@ APP_KEY| base64:cnZaer7BC8SY1LjgYpRpFT6ZMECbUGEy34aLeiMiUIc=              | The 
 ## Getting Started
 1. Clone the repo to your local machine and cd into the directory
 2. See above for the default .env variables you will need to set these in your local .env file and create a .env file if it does not exist.
-3. Now we can build the containers and start the application by running the following command: `./vendor/bin/sail up`
+   1. Or just change the .env.example to .env to have your .env file
+4. Now we can build the containers and start the application by running the following command: `./vendor/bin/sail up`
 4. Once the containers are built and running you can access the application at https://localhost:yourportnumber
