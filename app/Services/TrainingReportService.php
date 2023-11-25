@@ -4,44 +4,54 @@ namespace App\Services;
 
 use InvalidArgumentException;
 
+/**
+ *
+ */
 class TrainingReportService
 {
+    /**
+     * @param $trainings
+     * @return array
+     */
     public function calculateCompletedTrainings($trainings)
     {
         if (!is_array($trainings)) {
             throw new InvalidArgumentException('Training data must be an array.');
         }
 
-//    array to store completed trainings
         $completedTrainings = [];
-//    loop through each person
         foreach ($trainings as $person) {
             if (!isset($person->completions) || !is_array($person->completions)) {
-                continue; // Skip if no 'completions' key or if it's not an array
+                continue;
             }
-//        temp array for each training
             $tempTrainingArray = [];
-//        loop through each training
+
             foreach ($person->completions as $completedTraining) {
-//            get training name
+
                 $trainingName = $completedTraining->name;
-//            check if training is already completed
+
                 if (!isset($completedTrainings[$trainingName])) {
                     $completedTrainings[$trainingName]['name'] = $trainingName;
                     $completedTrainings[$trainingName]['count'] = 0;
                 } else {
-//                check if training has been done once already by user
+
                     if (!isset($tempTrainingArray[$trainingName])) {
                         $completedTrainings[$trainingName]['count']++;
                     }
                 }
-//            add training to temp array
+
                 $tempTrainingArray[$trainingName] = 1;
             }
         }
         return array_values($completedTrainings);
     }
 
+    /**
+     * @param $trainings
+     * @param $selectedTrainings
+     * @param $fiscalYear
+     * @return array
+     */
     public function getParticipantsForTrainingInFiscalYear($trainings, $selectedTrainings, $fiscalYear)
     {
         $startOfFiscalYear = strtotime('07/01/' . $fiscalYear - 1);
@@ -72,6 +82,11 @@ class TrainingReportService
         return array_values($attendance);
     }
 
+    /**
+     * @param $trainings
+     * @param $dateGiven
+     * @return array
+     */
     public function findPeopleWithExpiredOrSoonExpiringTrainings($trainings, $dateGiven)
     {
         $expired_or_expiring_trainings = [];

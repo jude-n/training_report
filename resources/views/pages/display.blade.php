@@ -4,13 +4,18 @@
     <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between">
             <h1 class="text-3xl font-bold text-gray-800">Data Overview</h1>
-
+            <form method="post" action="{{ route('training.data.export') }}">
+                @csrf
+                <input type="hidden" name="trainingParticipantCount" value="{{ serialize($trainingParticipantCount) }}">
+                <input type="hidden" name="participants" value="{{ serialize($participants) }}">
+                <input type="hidden" name="peopleWithExpiredTrainings" value="{{ serialize($peopleWithExpiredTrainings) }}">
             <button class="bg-primary text-white px-4 py-2 rounded">Export All</button>
+            </form>
         </div>
 
         <div class="mt-8">
             <div class="flex flex-wrap -mb-4">
-                <h2 class="text-3xl mb-6 text-gray-700">Overview of Training Attendance</h2>
+                <h2 class="text-3xl mb-6 text-gray-700">Overview of Training Completion</h2>
                 <table class="w-full table-auto border-collapse  rounded shadow-lg">
                     <thead class="bg-gray-200">
                     <tr>
@@ -34,7 +39,7 @@
 
         <div class="bg-gray-100 py-6 mt-8">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl mb-6 text-gray-700">Attendance Record for Trainings</h2>
+                <h2 class="text-3xl mb-6 text-gray-700">Completion Record for Trainings</h2>
                 <div class="flex flex-wrap items-start justify-start mt-8">
                     @foreach ($participants as $event)
                         <div class="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
@@ -62,7 +67,7 @@
 
         <div class="bg-white py-6 mt-8">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl mb-6 text-gray-700">Training Expiry Status For Participants</h2>
+                <h2 class="text-3xl mb-6 text-gray-700">Training Expiry Status For Individuals</h2>
                 <div class="flex flex-wrap justify-start mt-8">
                     @foreach ($peopleWithExpiredTrainings as $person)
                         <div class="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">

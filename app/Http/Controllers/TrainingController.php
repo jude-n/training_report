@@ -42,8 +42,34 @@ class TrainingController extends Controller
 
     }
 
-    public function display()
+    public function export(Request $request)
     {
-        return view('pages.display');
+
+        if ($request->has('trainingParticipantCount')) {
+            $unserializedTrainingData = unserialize($request->trainingParticipantCount);
+            $trainingParticipantCount = json_encode($unserializedTrainingData);
+            file_put_contents('trainingParticipantCount.json', $trainingParticipantCount);
+        }
+        if ($request->has('participants')) {
+            $unserializedParticipantData = unserialize($request->participants);
+            $particapanst = json_encode($unserializedParticipantData);
+            file_put_contents('participants.json', $particapanst);
+        }
+        if ($request->has('peopleWithExpiredTrainings')) {
+            $unserializedExpiredData = unserialize($request->peopleWithExpiredTrainings);
+            $peopleWithExpiredTrainings = json_encode($unserializedExpiredData);
+            file_put_contents('peopleWithExpiredTrainings.json', $peopleWithExpiredTrainings);
+        }
+
+        $files = array('trainingParticipantCount.json', 'participants.json', 'peopleWithExpiredTrainings.json');
+        $zipname = 'trainingReports.zip';
+        $zip = new \ZipArchive;
+        $zip->open($zipname, \ZipArchive::CREATE);
+        foreach ($files as $file) {
+            $zip->addFile($file);
+        }
+        $zip->close();
+        chmod($zipname, 0755);
+        return response()->download($zipname);
     }
 }
