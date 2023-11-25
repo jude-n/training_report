@@ -8,7 +8,6 @@ class TrainingReportService
 {
     public function calculateCompletedTrainings($trainings)
     {
-//        dd($trainings);
         if (!is_array($trainings)) {
             throw new InvalidArgumentException('Training data must be an array.');
         }
@@ -28,18 +27,19 @@ class TrainingReportService
                 $trainingName = $completedTraining->name;
 //            check if training is already completed
                 if (!isset($completedTrainings[$trainingName])) {
-                    $completedTrainings[$trainingName] = 0;
+                    $completedTrainings[$trainingName]['name'] = $trainingName;
+                    $completedTrainings[$trainingName]['count'] = 0;
                 } else {
 //                check if training has been done once already by user
                     if (!isset($tempTrainingArray[$trainingName])) {
-                        $completedTrainings[$trainingName]++;
+                        $completedTrainings[$trainingName]['count']++;
                     }
                 }
 //            add training to temp array
                 $tempTrainingArray[$trainingName] = 1;
             }
         }
-        return $completedTrainings;
+        return array_values($completedTrainings);
     }
 
     public function getParticipantsForTrainingInFiscalYear($trainings, $selectedTrainings, $fiscalYear)
@@ -61,22 +61,23 @@ class TrainingReportService
 
                 $completions = $this->filterByFiscalYear($filteredCompletions, $startOfFiscalYear, $endOfFiscalYear);
                 if (count($completions) > 0) {
-                    $names[] = $person->name;
+                    $names[]['name'] = $person->name;
                 }
             }
             if (count($names) > 0) {
-                $attendance[$training] = $names;
+                $attendance[$training]['name'] = $training;
+                $attendance[$training]['attendees'] = $names;
             }
         }
-        return $attendance;
+        return array_values($attendance);
     }
 
     public function findPeopleWithExpiredOrSoonExpiringTrainings($trainings, $dateGiven)
     {
-        $sortedData = [];
         $expired_or_expiring_trainings = [];
         $date = strtotime($dateGiven);
         $newDate = date('m/d/Y ', $date);
+        $nextMonthDate = date('m/d/Y', strtotime("+1 month", $date));
 
         foreach ($trainings as $person) {
             usort($person->completions, function ($a, $b) {
@@ -92,7 +93,7 @@ class TrainingReportService
                         $tempArray['name'] = $trainingName;
                         $tempArray['timestamp'] = $trainingDate;
                         $tempArray['status'] = 'Expired';
-                    } else if ($trainingDate <= date('m/d/Y', strtotime("+1 month", $date))) {
+                    } else if ($trainingDate <= $nextMonthDate) {
                         $tempArray['name'] = $trainingName;
                         $tempArray['timestamp'] = $trainingDate;
                         $tempArray['status'] = 'Expires soon';
@@ -100,11 +101,12 @@ class TrainingReportService
                     $encountered[$trainingName] = 1;
                 }
                 if (!empty($tempArray)) {
+                    $expired_or_expiring_trainings[$person->name]['name'] = $person->name;
                     $expired_or_expiring_trainings[$person->name]['completions'][] = $tempArray;
                 }
             }
         }
-        return $expired_or_expiring_trainings;
+        return array_values($expired_or_expiring_trainings);
     }
 
     /**

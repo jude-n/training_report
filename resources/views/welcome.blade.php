@@ -24,7 +24,7 @@
                     </div>
                 @endif
                 <!-- Create a form to upload a file -->
-                <form action="{{ route('upload') }}" method="POST" enctype="multipart/form-data" >
+                <form action="{{ route('training.upload') }}" method="POST" enctype="multipart/form-data" >
                     @csrf
                     <div class="flex items-center mb-4">
                         <label for="file" class="w-1/4 text-right mr-4">Select a file:</label>
