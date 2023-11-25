@@ -40,12 +40,12 @@
                         </select>
                     </div>
                     <div class="flex items-center mb-4">
-                        <label for="trainings" class="w-1/4 text-right mr-4">Trainings:</label>
-                        <input type="text" name="trainings" id="trainings" class="w-3/4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
+                        <label for="selectedTrainings" class="w-1/4 text-right mr-4">Trainings:</label>
+                        <input type="text" name="selectedTrainings" id="selectedTrainings" class="w-3/4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
                     </div>
                     <div class="flex items-center mb-4">
                         <label for="expiryDate" class="w-1/4 text-right mr-4">Expiry:</label>
-                        <input type="date" name="expiry" id="expiryDate" class="w-3/4">
+                        <input type="date" name="expiryDate" id="expiryDate" class="w-3/4">
                     </div>
                     <div class="flex justify-center">
                         <button type="submit" class="bg-primary hover:bg-primary-80 text-white font-bold py-2 px-4 rounded">Upload</button>
