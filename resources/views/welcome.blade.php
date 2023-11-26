@@ -44,7 +44,7 @@
                     <div class="flex items-start mb-4">
                         <label for="selectedTrainings" class="w-1/4 text-right mr-4 pt-2">Trainings:</label>
                         <div class="w-3/4">
-                            <input required type="text" placeholder="e.g. Electrical Safety for Labs, X-Ray Safety" name="selectedTrainings" id="selectedTrainings" class="w-full bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
+                            <input required type="text" placeholder="e.g. Electrical Safety for Labs, X-Ray Safety" name="selectedTrainings" id="selectedTrainings" class="w-full bg-white text-primary focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block appearance-none">
                             <small class="text-gray-500">Please enter the trainings you would like to see</small>
                         </div>
                     </div>
