@@ -32,7 +32,7 @@ class TrainingReportService
 
                 if (!isset($completedTrainings[$trainingName])) {
                     $completedTrainings[$trainingName]['name'] = $trainingName;
-                    $completedTrainings[$trainingName]['count'] = 0;
+                    $completedTrainings[$trainingName]['count'] = 1;
                 } else {
 
                     if (!isset($tempTrainingArray[$trainingName])) {
