@@ -55,3 +55,15 @@ APP_KEY| base64:cnZaer7BC8SY1LjgYpRpFT6ZMECbUGEy34aLeiMiUIc=              | The 
 7. Now node dependencies need to be installed: `./vendor/bin/sail npm install`
 8. Finally we need to build the assets: `./vendor/bin/sail npm run development`
 9. Once the containers are built and running you can access the application at https://localhost:yourportnumber
+
+## Parameters used
+- Trainings: 
+  - Electrical Safety for Labs, X-Ray Safety, Laboratory Safety Training
+- Fiscal Year: 
+  - 2024
+- Expiry Date: 
+  - 1st Oct 2023
+- JSON file names: 
+  - trainingParticipantCount-TaskOne.json 
+  - participants-TaskTwo.json
+  - peopleWithExpiredTrainings-TaskThree.json

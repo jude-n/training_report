@@ -36,7 +36,7 @@
                         <label for="fiscalYear" class="w-1/4 text-right mr-4">Fiscal Year:</label>
                         <select required name="fiscalYear" id="fiscalYear" class="w-3/4 h-10 pl-3 pr-6 text-base border rounded-lg appearance-none text-primary">
                             <option value="">Select Fiscal Year</option>
-                            @for ($year = date('Y'); $year >= 2000; $year--)
+                            @for ($year = (int)(date('Y'))+1; $year >= 2000; $year--)
                                 <option value="{{ $year }}">{{ $year }}</option>
                             @endfor
                         </select>
