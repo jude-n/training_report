@@ -67,3 +67,25 @@ APP_KEY| base64:cnZaer7BC8SY1LjgYpRpFT6ZMECbUGEy34aLeiMiUIc=              | The 
   - trainingParticipantCount-TaskOne.json 
   - participants-TaskTwo.json
   - peopleWithExpiredTrainings-TaskThree.json
+
+## Screenshots
+
+### Home Screen
+<p align="center">
+<img src="HomeScreen.png" alt="Home Screen" style="width: 90%; margin-left: auto; margin-right: auto;">
+</p>
+
+### Task One
+<p align="center">
+<img src="TaskOne.png" alt="Task One" style="width: 90%; margin-left: auto; margin-right: auto;">
+</p>
+
+### Task Two
+<p align="center">
+<img src="TaskTwo.png" alt="Task Two" style="width: 90%; margin-left: auto; margin-right: auto;">
+</p>
+
+### Task Three
+<p align="center">
+<img src="TaskThree.png" alt="Task Three" style="width: 90%; margin-left: auto; margin-right: auto;">
+</p>
